@@ -3,8 +3,12 @@
 angular.module('emission.main', ['emission.main.recent',
                                  'emission.main.diary',
                                  'emission.main.control',
+<<<<<<< HEAD
                                  'emission.main.goals',
                                  'emission.main.sj',
+=======
+                                 'emission.main.recommendations',
+>>>>>>> 5f744a50cd0d57bdc3eeed1a60fe48ab06e30ca2
                                  'emission.main.common',
                                  'emission.main.heatmap',
                                  'emission.main.metrics',
@@ -62,12 +66,12 @@ angular.module('emission.main', ['emission.main.recent',
     }
   })
 
-  .state('root.main.goals', {
-    url: '/goals',
+  .state('root.main.recommendations', {
+    url: '/recommendations',
     views: {
-      'main-goals': {
-        templateUrl: 'templates/main-goals.html',
-        controller: 'GoalsCtrl'
+      'main-recommendations': {
+        templateUrl: 'templates/main-recommendations.html',
+        controller: 'RecommendationsCtrl'
       }
     }
   })
@@ -147,8 +151,7 @@ angular.module('emission.main', ['emission.main.recent',
     // Currently this is blank since it is basically a placeholder for the
     // three screens. But we can totally add hooks here if we want. It is the
     // controller for all the screens because none of them do anything for now.
-    $scope.dark_theme = $rootScope.dark_theme;
     $scope.tabsCustomClass = function() {
-        return ($scope.dark_theme)? "tabs-icon-top tabs-custom-dark" : "tabs-icon-top tabs-custom";
+        return "tabs-icon-top tabs-custom";
     }
 });
