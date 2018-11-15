@@ -3,12 +3,7 @@
 angular.module('emission.main', ['emission.main.recent',
                                  'emission.main.diary',
                                  'emission.main.control',
-<<<<<<< HEAD
-                                 'emission.main.goals',
-                                 'emission.main.sj',
-=======
                                  'emission.main.recommendations',
->>>>>>> 5f744a50cd0d57bdc3eeed1a60fe48ab06e30ca2
                                  'emission.main.common',
                                  'emission.main.heatmap',
                                  'emission.main.metrics',
