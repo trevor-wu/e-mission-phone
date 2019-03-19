@@ -33,6 +33,24 @@ angular.module('emission.services', ['emission.plugin.logger'])
         });
     };
 
+    this.getSuggestion = function() {
+      return new Promise(function(resolve, reject) {
+        var msgFiller = function(mesage) {
+          // donothing
+        }
+        window.cordova.plugins.BEMServerComm.pushGetJSON("/suggestion_sys/getSug", msgFiller, resolve, reject);
+      });
+    };
+
+   this.getSingleTripSuggestion = function(tripId) {
+      return new Promise(function(resolve, reject) {
+        var msgFiller = function(mesage) {
+          // donothing
+        }
+        window.cordova.plugins.BEMServerComm.pushGetJSON("/suggestion_sys/getSing/" +tripId, msgFiller, resolve, reject);
+      });
+    };
+
     /*
      * var regConfig = {'username': ....}
      * Other fields can be added easily and the server can be modified at the same time.

@@ -1,0 +1,48 @@
+<ion-view view-title="Recommendations" class="ion-view-background">
+     <ion-nav-buttons side="secondary">
+      <button class="button button-icon" ng-click="clickSuggestion(0)">
+        <i class="icon ion-refresh"></i>
+      </button>
+  </ion-nav-buttons>
+     <link rel="stylesheet" href="css/main-recommend.css">
+     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+     <link rel="stylesheet" type="text/css" href="slick/slick.css"/>
+  <ion-content class="has-header" overflow-scroll="true" padding="false">
+    <div id = "scrolling">
+     <center><div id="dashboard-recommend" class="card">
+       <h4 class="dashboard-headers"> Current Recommendation </h4>
+       <h4>
+         {{name}}<br />
+         {{mode}}<br />
+           <img src="img/small/small_{{stars}}.png" width="75" />
+             <button class="button button-block button-balanced button-outline" ng-click="clickReview(0)">Reviews</button>
+         </h4>
+     </div></center>
+       </div>
+   <div id="reviewModal0" class="modal">
+     <div class="modal-content">
+       <div align="left">
+       <h4>Reviews<br /></h4>
+       <img src="img/small/small_{{stars}}.png" width="75" /><br />
+       <li ng-repeat='r in revs'>
+       {{r.text}}
+       <img src="img/small/small_{{r.rating}}.png" width="50" /> - {{r.user.name}}
+     </li>
+      </div>
+         <button class="button button-block button-balanced button-outline back" ng-click="clickX()">Back</button>
+     </div>
+   </div>
+ <script src="js/recommendations.js"></script>
+ <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="slick/slick.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+      $('.scrolling').slick({
+        setting-name: setting-value
+      });
+    });
+  </script>
+
+</ion-content>
+</ion-view>
