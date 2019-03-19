@@ -4,7 +4,7 @@ angular.module('emission.main.diary.detail',['ui-leaflet', 'ng-walkthrough',
                                       'emission.services', 'emission.plugin.logger',
                                       'emission.incident.posttrip.manual'])
 
-.controller("DiaryDetailCtrl", function($scope, $rootScope, $window, $stateParams, $ionicActionSheet,
+.controller("DiaryDetailCtrl", function($scope, $rootScope, $window, $stateParams, $ionicActionSheet, $ionicLoading,
                                         leafletData, leafletMapEvents, nzTour, KVStore,
                                         Logger, Timeline, DiaryHelper, Config,
                                         CommHelper, PostTripManualMarker) {
@@ -47,6 +47,41 @@ angular.module('emission.main.diary.detail',['ui-leaflet', 'ng-walkthrough',
       $scope.$broadcast('invalidateSize');
   };
 
+  $scope.getIndividualSuggestion = function() {
+    $ionicLoading.show({
+        template: 'Loading...'
+        });
+    CommHelper.getSingleTripSuggestion($stateParams.tripId).then(function(result) {
+      console.log(result);
+      $ionicLoading.hide();
+      $scope.name = result.message;
+      $scope.mode = result.method;
+      $scope.bid = result.businessid;
+      $scope.stars = result.rating;
+    }).catch(function(err) {
+      console.log("Error while getting individual suggestion" + err);
+    });
+  };
+  $http.get('json/yelpfusion.json').then(function(result) {
+        $scope.yelp = result.data;
+      }
+  )
+  $scope.clickReview = function() {
+    $ionicLoading.show({
+      template: 'Loading Reviews...'
+      });
+    $http({
+      "async": true,
+      "crossDomain": true,
+      "url": "https://api.yelp.com/v3/businesses/"+$scope.bid+"/reviews",
+      "method": "GET",
+      "headers": $scope.yelp.headers
+    }).then(function(res) {
+      $scope.revs = res.data.reviews;
+    });
+    $ionicLoading.hide();
+  };
+
   $scope.getFormattedDate = DiaryHelper.getFormattedDate;
   $scope.arrowColor = DiaryHelper.arrowColor;
   $scope.parseEarlierOrLater = DiaryHelper.parseEarlierOrLater;
@@ -63,8 +98,10 @@ angular.module('emission.main.diary.detail',['ui-leaflet', 'ng-walkthrough',
   $scope.getFormattedTime = DiaryHelper.getFormattedTime;
   $scope.getFormattedTimeRange = DiaryHelper.getFormattedTimeRange;
   $scope.getFormattedDuration = DiaryHelper.getFormattedDuration;
-  $scope.getTripDetails = DiaryHelper.getTripDetails
+  $scope.getTripDetails = DiaryHelper.getTripDetails;
   $scope.tripgj = DiaryHelper.directiveForTrip($scope.trip);
+  $scope.name = "Click on the suggestion button for a suggestion for this trip";
+  $scope.mode = "Mode of Transporation";
 
   $scope.getTripBackground = function() {
      var ret_val = DiaryHelper.getTripBackground($scope.tripgj);
@@ -160,7 +197,7 @@ angular.module('emission.main.diary.detail',['ui-leaflet', 'ng-walkthrough',
   }
 
   $scope.$on('$ionicView.afterEnter', function(ev) {
-    // Workaround from 
+    // Workaround from
     // https://github.com/driftyco/ionic/issues/3433#issuecomment-195775629
     if(ev.targetScope !== $scope)
       return;
