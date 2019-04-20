@@ -54,8 +54,12 @@ angular.module('emission.main.diary.detail',['ui-leaflet', 'ng-walkthrough',
     CommHelper.getSingleTripSuggestion($stateParams.tripId).then(function(result) {
       console.log(result);
       $ionicLoading.hide();
-      $scope.name = result.message;
-      $scope.mode = result.method;
+      $scope.message = result.message;
+      $scope.question = result.question;
+      $scope.loc = result.suggested_loc;
+      $scope.mode = "Also try " + result.method + " instead.";
+      $scope.bid = result.businessid;
+      $scope.stars = result.rating;
     }).catch(function(err) {
       console.log("Error while getting individual suggestion" + err);
     });
@@ -176,7 +180,7 @@ angular.module('emission.main.diary.detail',['ui-leaflet', 'ng-walkthrough',
   }
 
   $scope.$on('$ionicView.afterEnter', function(ev) {
-    // Workaround from 
+    // Workaround from
     // https://github.com/driftyco/ionic/issues/3433#issuecomment-195775629
     if(ev.targetScope !== $scope)
       return;
