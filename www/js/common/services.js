@@ -46,7 +46,7 @@ angular.module('emission.main.common.services', [])
      * Returns the common trip corresponding to the specified tripId
      */
     commonGraph.trip2Common = function(tripId) {
-        if (angular.isDefined(commonGraph.data) && 
+        if (angular.isDefined(commonGraph.data) &&
             angular.isDefined(commonGraph.data.trip2CommonMap)) {
           return commonGraph.data.trip2CommonMap[tripId];
         } else {
@@ -143,7 +143,7 @@ angular.module('emission.main.common.services', [])
         var maxEntry = getKeyWithMaxVal(retMap);
         return maxEntry[0];
     };
-    commonGraph.getDisplayName = function(mode, obj) {
+    commonGraph.getdisplay_name = function(mode, obj) {
       var responseListener = function(data) {
         var address = data["address"];
         var name = "";
@@ -164,13 +164,13 @@ angular.module('emission.main.common.services', [])
         console.log("got response, setting display name to "+name);
         switch (mode) {
           case 'place':
-            obj.properties.displayName = name;
+            obj.properties.display_Name = name;
             break;
           case 'cplace':
-            obj.displayName = name;
+            obj.display_name = name;
             break;
           case 'ctrip':
-            obj.start_displayName = name;
+            obj.start_display_name = name;
             break;
         }
 
@@ -193,7 +193,7 @@ angular.module('emission.main.common.services', [])
             }
         }
         console.log("got response, setting display name to "+name);
-        obj.end_displayName = name;
+        obj.end_display_name = name;
 
       };
       switch (mode) {
@@ -279,7 +279,7 @@ angular.module('emission.main.common.services', [])
         commonGraph.data.graph.common_trips.forEach(function(cTrip, index, array) {
             commonGraph.data.cTripCountMap[cTrip._id.$oid] = cTrip.trips.length;
             commonGraph.data.cTripId2ObjMap[cTrip._id.$oid] = cTrip;
-            commonGraph.getDisplayName('ctrip', cTrip);
+            commonGraph.getdisplay_name('ctrip', cTrip);
             cTrip.trips.forEach(function(tripId,index,array) {
                 commonGraph.data.trip2CommonMap[tripId.$oid] = cTrip;
             });
@@ -293,11 +293,11 @@ angular.module('emission.main.common.services', [])
         commonGraph.data.graph.common_places.forEach(function(cPlace, index, array) {
             commonGraph.data.cPlaceCountMap[cPlace._id.$oid] = cPlace.places.length;
             commonGraph.data.cPlaceId2ObjMap[cPlace._id.$oid] = cPlace;
-            if (angular.isDefined(cPlace.displayName)) {
-              console.log("For place "+cPlace.id+", already have displayName "+cPlace.displayName);
+            if (angular.isDefined(cPlace.display_name)) {
+              console.log("For place "+cPlace.id+", already have display_name "+cPlace.display_name);
             } else {
               console.log("Don't have display name for end place, going to query nominatim");
-              commonGraph.getDisplayName('cplace', cPlace);
+              commonGraph.getdisplay_name('cplace', cPlace);
             }
             cPlace.places.forEach(function(placeId,index,array) {
                 commonGraph.data.place2CommonMap[placeId.$oid] = cPlace;
@@ -318,11 +318,11 @@ angular.module('emission.main.common.services', [])
                 "id": place._id.$oid,
                 "geometry": place.location,
                 "properties": {
-                    "displayName": place.displayName
+                    "display_name": place.display_name
                 }
             };
         });
-        // places.map($scope.getDisplayName);
+        // places.map($scope.getdisplay_name);
         var trips = commonGraph.data.graph.common_trips.map(function(trip) {
             return {
                 "type": "Feature",
